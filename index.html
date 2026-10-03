@@ -1,0 +1,2686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FMCG Inventory Management</title>
+
+    <style>
+
+        /* ================================
+           RESET & BASIC STYLING
+        ================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+
+        /* ================================
+           SIDEBAR
+        ================================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 250px;
+            height: 100vh;
+
+            background: #111827;
+            color: white;
+
+            padding: 25px 18px;
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 5px 10px 30px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+
+            background: #2563eb;
+
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+        }
+
+        .logo h2 {
+            font-size: 21px;
+        }
+
+        .logo span {
+            color: #9ca3af;
+            font-size: 11px;
+        }
+
+
+        /* NAVIGATION */
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: #9ca3af;
+
+            padding: 13px 15px;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            background: #1f2937;
+            color: white;
+        }
+
+        nav a:target {
+            background: #2563eb;
+            color: white;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+
+            border-top: 1px solid #374151;
+
+            padding-top: 15px;
+        }
+
+        .sidebar-bottom a {
+            display: block;
+
+            color: #9ca3af;
+
+            padding: 12px 15px;
+
+            font-size: 13px;
+        }
+
+        .sidebar-bottom a:hover {
+            color: white;
+        }
+
+
+        /* ================================
+           MAIN CONTENT
+        ================================= */
+
+        .main {
+            margin-left: 250px;
+
+            padding: 30px;
+        }
+
+
+        /* ================================
+           HEADER
+        ================================= */
+
+        .header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+
+            margin-bottom: 7px;
+        }
+
+        .header p {
+            color: #6b7280;
+
+            font-size: 14px;
+        }
+
+        .profile {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        .notification {
+            width: 40px;
+            height: 40px;
+
+            background: white;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            background: #2563eb;
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+        .profile strong {
+            display: block;
+
+            font-size: 14px;
+        }
+
+        .profile small {
+            color: #6b7280;
+
+            font-size: 11px;
+        }
+
+
+        /* ================================
+           SEARCH AREA
+        ================================= */
+
+        .top-tools {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+        }
+
+        .search {
+            width: 400px;
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 10px;
+
+            padding: 12px 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .search input {
+            width: 100%;
+
+            border: none;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+        .add-btn {
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 9px;
+
+            padding: 0 20px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background: #1d4ed8;
+        }
+
+
+        /* ================================
+           STATISTICS
+        ================================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 13px;
+
+            padding: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 21px;
+        }
+
+        .blue {
+            background: #dbeafe;
+        }
+
+        .green {
+            background: #dcfce7;
+        }
+
+        .orange {
+            background: #ffedd5;
+        }
+
+        .red {
+            background: #fee2e2;
+        }
+
+        .stat-card p {
+            color: #6b7280;
+
+            font-size: 12px;
+
+            margin-bottom: 5px;
+        }
+
+        .stat-card h2 {
+            font-size: 24px;
+
+            margin-bottom: 5px;
+        }
+
+        .stat-card span {
+            font-size: 11px;
+        }
+
+        .positive {
+            color: #16a34a;
+        }
+
+        .warning {
+            color: #ea580c;
+        }
+
+        .danger {
+            color: #dc2626;
+        }
+
+
+        /* ================================
+           PANELS
+        ================================= */
+
+        .panel {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 13px;
+
+            padding: 22px;
+
+            margin-bottom: 25px;
+        }
+
+        .panel-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 22px;
+        }
+
+        .panel-header h2 {
+            font-size: 18px;
+
+            margin-bottom: 5px;
+        }
+
+        .panel-header p {
+            color: #9ca3af;
+
+            font-size: 12px;
+        }
+
+
+        /* ================================
+           DASHBOARD
+        ================================= */
+
+        .dashboard-grid {
+            display: grid;
+
+            grid-template-columns: 2fr 1fr;
+
+            gap: 20px;
+        }
+
+
+        /* STOCK BARS */
+
+        .bar-item {
+            margin-bottom: 20px;
+        }
+
+        .bar-label {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 7px;
+
+            font-size: 12px;
+        }
+
+        .bar {
+            height: 9px;
+
+            background: #eef2f7;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+
+            border-radius: 10px;
+        }
+
+        .dairy {
+            width: 78%;
+            background: #3b82f6;
+        }
+
+        .beverages {
+            width: 65%;
+            background: #22c55e;
+        }
+
+        .snacks {
+            width: 58%;
+            background: #f59e0b;
+        }
+
+        .grocery {
+            width: 82%;
+            background: #8b5cf6;
+        }
+
+        .household {
+            width: 46%;
+            background: #ef4444;
+        }
+
+
+        /* SUMMARY */
+
+        .summary-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 13px 0;
+
+            border-bottom: 1px solid #f1f5f9;
+
+            font-size: 13px;
+        }
+
+        .summary-left {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+
+            border-radius: 50%;
+        }
+
+        .in-stock {
+            background: #22c55e;
+        }
+
+        .low-stock {
+            background: #f59e0b;
+        }
+
+        .out-stock {
+            background: #ef4444;
+        }
+
+        .summary-total {
+            display: flex;
+
+            justify-content: space-between;
+
+            padding-top: 20px;
+
+            font-size: 13px;
+        }
+
+        .summary-total strong {
+            color: #2563eb;
+        }
+
+
+        /* ================================
+           TABLE
+        ================================= */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f8fafc;
+
+            padding: 14px;
+
+            text-align: left;
+
+            font-size: 11px;
+
+            color: #6b7280;
+        }
+
+        td {
+            padding: 14px;
+
+            border-bottom: 1px solid #f1f5f9;
+
+            font-size: 12px;
+        }
+
+        .product {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .product-icon {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 18px;
+        }
+
+        .milk {
+            background: #e0f2fe;
+        }
+
+        .drink {
+            background: #fee2e2;
+        }
+
+        .rice {
+            background: #fef3c7;
+        }
+
+        .chips {
+            background: #ffedd5;
+        }
+
+        .soap {
+            background: #ede9fe;
+        }
+
+        .product strong {
+            display: block;
+
+            font-size: 12px;
+        }
+
+        .product small {
+            color: #9ca3af;
+
+            font-size: 10px;
+        }
+
+        .status {
+            padding: 6px 9px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            font-weight: bold;
+        }
+
+        .available {
+            background: #dcfce7;
+
+            color: #15803d;
+        }
+
+        .low {
+            background: #fef3c7;
+
+            color: #b45309;
+        }
+
+        .out {
+            background: #fee2e2;
+
+            color: #b91c1c;
+        }
+
+
+        /* ================================
+           SECTION TITLE
+        ================================= */
+
+        .section-title {
+            padding-top: 10px;
+
+            margin-bottom: 20px;
+        }
+
+        .section-title h1 {
+            font-size: 25px;
+
+            margin-bottom: 6px;
+        }
+
+        .section-title p {
+            color: #6b7280;
+
+            font-size: 13px;
+        }
+
+
+        /* ================================
+           PRODUCT CARDS
+        ================================= */
+
+        .product-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .product-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 13px;
+
+            padding: 20px;
+
+            transition: 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+        }
+
+        .big-product-icon {
+            width: 55px;
+            height: 55px;
+
+            background: #eff6ff;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
+
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            font-size: 16px;
+
+            margin-bottom: 5px;
+        }
+
+        .product-card p {
+            color: #9ca3af;
+
+            font-size: 12px;
+
+            margin-bottom: 15px;
+        }
+
+        .product-info {
+            display: flex;
+
+            justify-content: space-between;
+
+            padding-top: 12px;
+
+            border-top: 1px solid #f1f5f9;
+
+            font-size: 12px;
+        }
+
+
+        /* ================================
+           CATEGORY CARDS
+        ================================= */
+
+        .category-grid {
+            display: grid;
+
+            grid-template-columns: repeat(5, 1fr);
+
+            gap: 15px;
+        }
+
+        .category-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            text-align: center;
+
+            transition: 0.3s;
+        }
+
+        .category-card:hover {
+            border-color: #2563eb;
+
+            transform: translateY(-3px);
+        }
+
+        .category-icon {
+            font-size: 30px;
+
+            margin-bottom: 10px;
+        }
+
+        .category-card h3 {
+            font-size: 14px;
+
+            margin-bottom: 5px;
+        }
+
+        .category-card p {
+            color: #9ca3af;
+
+            font-size: 11px;
+        }
+
+
+        /* ================================
+           SUPPLIER CARDS
+        ================================= */
+
+        .supplier-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .supplier-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 13px;
+
+            padding: 20px;
+        }
+
+        .supplier-top {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 18px;
+        }
+
+        .supplier-icon {
+            width: 45px;
+            height: 45px;
+
+            background: #dbeafe;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 20px;
+        }
+
+        .supplier-card h3 {
+            font-size: 14px;
+        }
+
+        .supplier-card small {
+            color: #9ca3af;
+
+            font-size: 10px;
+        }
+
+        .supplier-details {
+            font-size: 12px;
+
+            line-height: 2;
+
+            color: #6b7280;
+        }
+
+
+        /* ================================
+           REPORTS
+        ================================= */
+
+        .report-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .report-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 13px;
+
+            padding: 22px;
+        }
+
+        .report-card h3 {
+            font-size: 15px;
+
+            margin-bottom: 10px;
+        }
+
+        .report-number {
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #2563eb;
+
+            margin-bottom: 5px;
+        }
+
+        .report-card p {
+            color: #9ca3af;
+
+            font-size: 11px;
+        }
+
+        .report-table {
+            margin-top: 20px;
+        }
+
+
+        /* ================================
+           FOOTER
+        ================================= */
+
+        footer {
+            display: flex;
+
+            justify-content: space-between;
+
+            color: #9ca3af;
+
+            font-size: 11px;
+
+            padding: 10px 0 25px;
+        }
+
+
+        /* ================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 1100px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .product-grid,
+            .supplier-grid,
+            .report-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                width: 70px;
+
+                padding: 20px 10px;
+            }
+
+            .logo div:not(.logo-icon) {
+                display: none;
+            }
+
+            .logo {
+                justify-content: center;
+            }
+
+            nav a {
+                justify-content: center;
+
+                padding: 13px 5px;
+
+                font-size: 18px;
+            }
+
+            nav a span {
+                display: none;
+            }
+
+            .sidebar-bottom {
+                display: none;
+            }
+
+            .main {
+                margin-left: 70px;
+
+                padding: 20px;
+            }
+
+            .profile > div:last-child {
+                display: none;
+            }
+
+            .top-tools {
+                flex-direction: column;
+            }
+
+            .search {
+                width: 100%;
+            }
+
+            .add-btn {
+                height: 42px;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .main {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .product-grid,
+            .supplier-grid,
+            .report-grid,
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .notification {
+                display: none;
+            }
+
+            footer {
+                flex-direction: column;
+
+                gap: 5px;
+            }
+        }
+.ai-box {
+    background: white;
+    padding: 25px;
+    margin-top: 30px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.ai-box h2 {
+    margin-bottom: 8px;
+}
+
+.ai-box p {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.ai-box textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    resize: vertical;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.ai-box button {
+    margin-top: 12px;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #2563eb;
+    color: white;
+    font-size: 15px;
+}
+
+.ai-box button:hover {
+    opacity: 0.9;
+}
+
+#aiResponse {
+    margin-top: 20px;
+    padding: 18px;
+    background: #f5f7fb;
+    border-radius: 10px;
+    line-height: 1.7;
+    min-height: 40px;
+    word-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+
+    .ai-box {
+        padding: 18px;
+        margin: 15px 10px;
+    }
+
+    .ai-box h2 {
+        font-size: 20px;
+    }
+
+    .ai-box textarea {
+        min-height: 100px;
+        font-size: 14px;
+    }
+
+    .ai-box button {
+        width: 100%;
+    }
+
+    #aiResponse {
+        font-size: 14px;
+    }
+}
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         SIDEBAR
+    ====================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                📦
+            </div>
+
+            <div>
+                <h2>FMCG</h2>
+                <span>Inventory System</span>
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="#dashboard">
+                📊
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#inventory">
+                📦
+                <span>Inventory</span>
+            </a>
+
+            <a href="#products">
+                🛒
+                <span>Products</span>
+            </a>
+
+            <a href="#categories">
+                🏷️
+                <span>Categories</span>
+            </a>
+
+            <a href="#suppliers">
+                🚚
+                <span>Suppliers</span>
+            </a>
+
+            <a href="#reports">
+                📈
+                <span>Reports</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="#dashboard">
+                ⚙️ Settings
+            </a>
+
+            <a href="#dashboard">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================
+         MAIN
+    ====================================== -->
+
+    <main class="main">
+
+
+        <!-- =================================
+             DASHBOARD
+        ================================== -->
+
+        <section id="dashboard">
+
+            <header class="header">
+
+                <div>
+
+                    <h1>
+                        Inventory Dashboard
+                    </h1>
+
+                    <p>
+                        Monitor your FMCG inventory and stock levels.
+                    </p>
+
+                </div>
+
+
+                <div class="profile">
+
+                    <div class="notification">
+                        🔔
+                    </div>
+
+                    <div class="avatar">
+                        SM
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Shumaila
+                        </strong>
+
+                        <small>
+                            Inventory Manager
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <div class="top-tools">
+
+                <div class="search">
+
+                    🔍
+
+                    <input
+                        type="text"
+                        placeholder="Search products..."
+                    >
+
+                </div>
+
+                <button class="add-btn">
+                    + Add Product
+                </button>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+
+            <div class="stats">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        📦
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Total Products
+                        </p>
+
+                        <h2>
+                            248
+                        </h2>
+
+                        <span class="positive">
+                            ↑ 12% this month
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        📈
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Total Stock
+                        </p>
+
+                        <h2>
+                            8,540
+                        </h2>
+
+                        <span class="positive">
+                            ↑ 8.5% this month
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        ⚠️
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Low Stock
+                        </p>
+
+                        <h2>
+                            18
+                        </h2>
+
+                        <span class="warning">
+                            Needs attention
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon red">
+                        ❌
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Out of Stock
+                        </p>
+
+                        <h2>
+                            7
+                        </h2>
+
+                        <span class="danger">
+                            Requires restock
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DASHBOARD CONTENT -->
+
+            <div class="dashboard-grid">
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h2>
+                                Stock Overview
+                            </h2>
+
+                            <p>
+                                Inventory distribution by category
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="bar-item">
+
+                        <div class="bar-label">
+                            <span>Dairy</span>
+                            <strong>78%</strong>
+                        </div>
+
+                        <div class="bar">
+                            <div class="bar-fill dairy"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="bar-item">
+
+                        <div class="bar-label">
+                            <span>Beverages</span>
+                            <strong>65%</strong>
+                        </div>
+
+                        <div class="bar">
+                            <div class="bar-fill beverages"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="bar-item">
+
+                        <div class="bar-label">
+                            <span>Snacks</span>
+                            <strong>58%</strong>
+                        </div>
+
+                        <div class="bar">
+                            <div class="bar-fill snacks"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="bar-item">
+
+                        <div class="bar-label">
+                            <span>Grocery</span>
+                            <strong>82%</strong>
+                        </div>
+
+                        <div class="bar">
+                            <div class="bar-fill grocery"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="bar-item">
+
+                        <div class="bar-label">
+                            <span>Household</span>
+                            <strong>46%</strong>
+                        </div>
+
+                        <div class="bar">
+                            <div class="bar-fill household"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h2>
+                                Inventory Summary
+                            </h2>
+
+                            <p>
+                                Current stock condition
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <div class="summary-left">
+
+                            <span class="dot in-stock"></span>
+
+                            In Stock
+
+                        </div>
+
+                        <strong>
+                            76%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <div class="summary-left">
+
+                            <span class="dot low-stock"></span>
+
+                            Low Stock
+
+                        </div>
+
+                        <strong>
+                            17%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <div class="summary-left">
+
+                            <span class="dot out-stock"></span>
+
+                            Out of Stock
+
+                        </div>
+
+                        <strong>
+                            7%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-total">
+
+                        <span>
+                            Inventory Value
+                        </span>
+
+                        <strong>
+                            Rs. 2.45M
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             INVENTORY
+        ================================== -->
+
+        <section id="inventory">
+
+            <div class="section-title">
+
+                <h1>
+                    Inventory
+                </h1>
+
+                <p>
+                    Complete overview of available products and stock levels.
+                </p>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Inventory List
+                        </h2>
+
+                        <p>
+                            Current stock information
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>SKU</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="product">
+
+                                        <div class="product-icon milk">
+                                            🥛
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Fresh Milk
+                                            </strong>
+
+                                            <small>
+                                                1 Liter Pack
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Dairy</td>
+                                <td>FMC-001</td>
+                                <td>450</td>
+                                <td>Rs. 280</td>
+
+                                <td>
+                                    <span class="status available">
+                                        ● In Stock
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="product">
+
+                                        <div class="product-icon drink">
+                                            🥤
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Cola Drink
+                                            </strong>
+
+                                            <small>
+                                                500ml Bottle
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Beverages</td>
+                                <td>FMC-002</td>
+                                <td>85</td>
+                                <td>Rs. 120</td>
+
+                                <td>
+                                    <span class="status low">
+                                        ● Low Stock
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="product">
+
+                                        <div class="product-icon rice">
+                                            🍚
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Basmati Rice
+                                            </strong>
+
+                                            <small>
+                                                5 Kg Bag
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Grocery</td>
+                                <td>FMC-003</td>
+                                <td>320</td>
+                                <td>Rs. 1,450</td>
+
+                                <td>
+                                    <span class="status available">
+                                        ● In Stock
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="product">
+
+                                        <div class="product-icon chips">
+                                            🍟
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Potato Chips
+                                            </strong>
+
+                                            <small>
+                                                Large Pack
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Snacks</td>
+                                <td>FMC-004</td>
+                                <td>0</td>
+                                <td>Rs. 150</td>
+
+                                <td>
+                                    <span class="status out">
+                                        ● Out of Stock
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="product">
+
+                                        <div class="product-icon soap">
+                                            🧼
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Bath Soap
+                                            </strong>
+
+                                            <small>
+                                                100g Pack
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Household</td>
+                                <td>FMC-005</td>
+                                <td>190</td>
+                                <td>Rs. 180</td>
+
+                                <td>
+                                    <span class="status available">
+                                        ● In Stock
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             PRODUCTS
+        ================================== -->
+
+        <section id="products">
+
+            <div class="section-title">
+
+                <h1>
+                    Products
+                </h1>
+
+                <p>
+                    Manage FMCG products available in your inventory.
+                </p>
+
+            </div>
+
+
+            <div class="product-grid">
+
+
+                <div class="product-card">
+
+                    <div class="big-product-icon">
+                        🥛
+                    </div>
+
+                    <h3>
+                        Fresh Milk
+                    </h3>
+
+                    <p>
+                        Dairy Product
+                    </p>
+
+                    <div class="product-info">
+
+                        <span>
+                            Stock: 450
+                        </span>
+
+                        <strong>
+                            Rs. 280
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="product-card">
+
+                    <div class="big-product-icon">
+                        🥤
+                    </div>
+
+                    <h3>
+                        Cola Drink
+                    </h3>
+
+                    <p>
+                        Beverage
+                    </p>
+
+                    <div class="product-info">
+
+                        <span>
+                            Stock: 85
+                        </span>
+
+                        <strong>
+                            Rs. 120
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="product-card">
+
+                    <div class="big-product-icon">
+                        🍚
+                    </div>
+
+                    <h3>
+                        Basmati Rice
+                    </h3>
+
+                    <p>
+                        Grocery
+                    </p>
+
+                    <div class="product-info">
+
+                        <span>
+                            Stock: 320
+                        </span>
+
+                        <strong>
+                            Rs. 1,450
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="product-card">
+
+                    <div class="big-product-icon">
+                        🍟
+                    </div>
+
+                    <h3>
+                        Potato Chips
+                    </h3>
+
+                    <p>
+                        Snacks
+                    </p>
+
+                    <div class="product-info">
+
+                        <span>
+                            Stock: 0
+                        </span>
+
+                        <strong>
+                            Rs. 150
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="product-card">
+
+                    <div class="big-product-icon">
+                        🧼
+                    </div>
+
+                    <h3>
+                        Bath Soap
+                    </h3>
+
+                    <p>
+                        Household
+                    </p>
+
+                    <div class="product-info">
+
+                        <span>
+                            Stock: 190
+                        </span>
+
+                        <strong>
+                            Rs. 180
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="product-card">
+
+                    <div class="big-product-icon">
+                        🍪
+                    </div>
+
+                    <h3>
+                        Chocolate Biscuits
+                    </h3>
+
+                    <p>
+                        Snacks
+                    </p>
+
+                    <div class="product-info">
+
+                        <span>
+                            Stock: 210
+                        </span>
+
+                        <strong>
+                            Rs. 100
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             CATEGORIES
+        ================================== -->
+
+        <section id="categories">
+
+            <div class="section-title">
+
+                <h1>
+                    Categories
+                </h1>
+
+                <p>
+                    Product categories and their inventory levels.
+                </p>
+
+            </div>
+
+
+            <div class="category-grid">
+
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        🥛
+                    </div>
+
+                    <h3>
+                        Dairy
+                    </h3>
+
+                    <p>
+                        42 Products
+                    </p>
+
+                </div>
+
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        🥤
+                    </div>
+
+                    <h3>
+                        Beverages
+                    </h3>
+
+                    <p>
+                        38 Products
+                    </p>
+
+                </div>
+
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        🍪
+                    </div>
+
+                    <h3>
+                        Snacks
+                    </h3>
+
+                    <p>
+                        56 Products
+                    </p>
+
+                </div>
+
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        🍚
+                    </div>
+
+                    <h3>
+                        Grocery
+                    </h3>
+
+                    <p>
+                        67 Products
+                    </p>
+
+                </div>
+
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        🧼
+                    </div>
+
+                    <h3>
+                        Household
+                    </h3>
+
+                    <p>
+                        45 Products
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             SUPPLIERS
+        ================================== -->
+
+        <section id="suppliers">
+
+            <div class="section-title">
+
+                <h1>
+                    Suppliers
+                </h1>
+
+                <p>
+                    Manage suppliers connected with your inventory.
+                </p>
+
+            </div>
+
+
+            <div class="supplier-grid">
+
+
+                <div class="supplier-card">
+
+                    <div class="supplier-top">
+
+                        <div class="supplier-icon">
+                            🏢
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                ABC Foods
+                            </h3>
+
+                            <small>
+                                Food Supplier
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="supplier-details">
+
+                        📞 +92 300 1234567
+                        <br>
+
+                        ✉️ abcfoods@example.com
+                        <br>
+
+                        📦 35 Products
+
+                    </div>
+
+                </div>
+
+
+                <div class="supplier-card">
+
+                    <div class="supplier-top">
+
+                        <div class="supplier-icon">
+                            🏢
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Fresh Distribution
+                            </h3>
+
+                            <small>
+                                Beverage Supplier
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="supplier-details">
+
+                        📞 +92 301 9876543
+                        <br>
+
+                        ✉️ fresh@example.com
+                        <br>
+
+                        📦 28 Products
+
+                    </div>
+
+                </div>
+
+
+                <div class="supplier-card">
+
+                    <div class="supplier-top">
+
+                        <div class="supplier-icon">
+                            🏢
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Star Wholesale
+                            </h3>
+
+                            <small>
+                                Grocery Supplier
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="supplier-details">
+
+                        📞 +92 302 5551234
+                        <br>
+
+                        ✉️ star@example.com
+                        <br>
+
+                        📦 42 Products
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             REPORTS
+        ================================== -->
+
+        <section id="reports">
+
+            <div class="section-title">
+
+                <h1>
+                    Reports
+                </h1>
+
+                <p>
+                    Inventory performance and business summary.
+                </p>
+
+            </div>
+
+
+            <div class="report-grid">
+
+
+                <div class="report-card">
+
+                    <h3>
+                        Total Inventory Value
+                    </h3>
+
+                    <div class="report-number">
+                        Rs. 2.45M
+                    </div>
+
+                    <p>
+                        Estimated current stock value
+                    </p>
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <h3>
+                        Products Sold
+                    </h3>
+
+                    <div class="report-number">
+                        1,842
+                    </div>
+
+                    <p>
+                        Products sold this month
+                    </p>
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <h3>
+                        Pending Orders
+                    </h3>
+
+                    <div class="report-number">
+                        24
+                    </div>
+
+                    <p>
+                        Orders waiting for delivery
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="panel report-table">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Monthly Inventory Report
+                        </h2>
+
+                        <p>
+                            Summary of inventory performance
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Month
+                                </th>
+
+                                <th>
+                                    Products Added
+                                </th>
+
+                                <th>
+                                    Products Sold
+                                </th>
+
+                                <th>
+                                    Restocked
+                                </th>
+
+                                <th>
+                                    Inventory Value
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr>
+
+                                <td>
+                                    January
+                                </td>
+
+                                <td>
+                                    120
+                                </td>
+
+                                <td>
+                                    1,240
+                                </td>
+
+                                <td>
+                                    850
+                                </td>
+
+                                <td>
+                                    Rs. 2.1M
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    February
+                                </td>
+
+                                <td>
+                                    145
+                                </td>
+
+                                <td>
+                                    1,420
+                                </td>
+
+                                <td>
+                                    920
+                                </td>
+
+                                <td>
+                                    Rs. 2.2M
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    March
+                                </td>
+
+                                <td>
+                                    168
+                                </td>
+
+                                <td>
+                                    1,580
+                                </td>
+
+                                <td>
+                                    1,050
+                                </td>
+
+                                <td>
+                                    Rs. 2.3M
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    April
+                                </td>
+
+                                <td>
+                                    190
+                                </td>
+
+                                <td>
+                                    1,720
+                                </td>
+
+                                <td>
+                                    1,180
+                                </td>
+
+                                <td>
+                                    Rs. 2.4M
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    May
+                                </td>
+
+                                <td>
+                                    210
+                                </td>
+
+                                <td>
+                                    1,842
+                                </td>
+
+                                <td>
+                                    1,250
+                                </td>
+
+                                <td>
+                                    Rs. 2.45M
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <span>
+                © 2026 FMCG Inventory Management System
+            </span>
+
+            <span>
+                HTML + CSS Project
+            </span>
+
+        </footer>
+
+
+    </main>
+<div class="ai-box">
+
+    <h2>🤖 AI Inventory Assistant</h2>
+
+    <p>
+        Ask questions about your inventory, stock, products or suppliers.
+    </p>
+
+    <textarea
+        id="aiQuestion"
+        placeholder="Example: Which products should I restock?"
+    ></textarea>
+
+    <button onclick="askAI()">
+        Ask AI
+    </button>
+
+    <div id="aiResponse">
+        AI response will appear here...
+    </div>
+
+</div>
+
+<script>
+
+async function askAI() {
+
+    const question =
+        document.getElementById("aiQuestion").value.trim();
+
+    const responseBox =
+        document.getElementById("aiResponse");
+
+    if (!question) {
+        responseBox.innerHTML =
+            "Please enter a question.";
+        return;
+    }
+
+    responseBox.innerHTML =
+        "⏳ AI is analyzing your inventory...";
+
+    try {
+
+        const response = await fetch("/api/ai", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                message: question
+            })
+
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || "Something went wrong."
+            );
+        }
+
+        responseBox.innerHTML =
+            data.answer.replace(/\n/g, "<br>");
+
+    } catch (error) {
+
+        responseBox.innerHTML =
+            "❌ " + error.message;
+
+    }
+}
+
+</script>
+</body>
+</html>
