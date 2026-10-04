@@ -1076,9 +1076,12 @@
 .ai-box {
     background: white;
     padding: 25px;
-    margin-top: 30px;
+    margin: 30px 0 25px;
     border-radius: 16px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .ai-box h2 {
@@ -1150,6 +1153,243 @@
         font-size: 14px;
     }
 }
+    
+/* ================================
+   FUNCTIONAL UI
+================================ */
+.page-section {
+    display: none;
+}
+.page-section.active-section {
+    display: block;
+}
+
+.search-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+.search-controls select {
+    border: none;
+    border-left: 1px solid #e5e7eb;
+    outline: none;
+    background: white;
+    color: #374151;
+    padding: 5px 8px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.search-controls input {
+    flex: 1;
+    min-width: 120px;
+}
+
+.empty-state {
+    text-align: center;
+    color: #9ca3af;
+    padding: 30px !important;
+}
+
+.action-btn {
+    border: none;
+    border-radius: 7px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+.action-btn.primary {
+    background: #2563eb;
+    color: white;
+}
+.action-btn.secondary {
+    background: #eef2ff;
+    color: #1d4ed8;
+}
+.action-btn.danger {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+.action-btn:hover {
+    opacity: 0.9;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+.setting-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 13px;
+    padding: 22px;
+}
+.setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+.setting-row:last-child {
+    border-bottom: none;
+}
+.setting-row strong {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+.setting-row small {
+    color: #9ca3af;
+    font-size: 11px;
+}
+.switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    flex: 0 0 auto;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    background: #d1d5db;
+    border-radius: 20px;
+    transition: .2s;
+}
+.slider:before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: .2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+.switch input:checked + .slider {
+    background: #2563eb;
+}
+.switch input:checked + .slider:before {
+    transform: translateX(20px);
+}
+.settings-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+dialog#productDialog {
+    width: min(520px, calc(100% - 30px));
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    box-shadow: 0 25px 70px rgba(0,0,0,.22);
+}
+dialog#productDialog::backdrop {
+    background: rgba(15, 23, 42, .55);
+}
+.modal-content {
+    padding: 24px;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+.modal-header h2 {
+    font-size: 20px;
+}
+.close-btn {
+    border: none;
+    background: #f3f4f6;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.form-group.full {
+    grid-column: 1 / -1;
+}
+.form-group label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #374151;
+}
+.form-group input,
+.form-group select {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 11px 12px;
+    outline: none;
+    font-size: 13px;
+}
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #2563eb;
+}
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.compact-mode .panel,
+.compact-mode .product-card,
+.compact-mode .category-card,
+.compact-mode .supplier-card,
+.compact-mode .report-card {
+    padding: 15px;
+}
+.compact-mode td,
+.compact-mode th {
+    padding: 9px;
+}
+
+@media (max-width: 700px) {
+    .settings-grid,
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-group.full {
+        grid-column: auto;
+    }
+    .search-controls {
+        flex-wrap: wrap;
+    }
+    .search-controls select {
+        border-left: none;
+        border-top: 1px solid #e5e7eb;
+        width: 100%;
+        padding: 8px 2px;
+    }
+}
+
     </style>
 </head>
 
@@ -1179,32 +1419,32 @@
 
         <nav>
 
-            <a href="#dashboard">
+            <a href="#dashboard" data-section="dashboard">
                 📊
                 <span>Dashboard</span>
             </a>
 
-            <a href="#inventory">
+            <a href="#inventory" data-section="inventory">
                 📦
                 <span>Inventory</span>
             </a>
 
-            <a href="#products">
+            <a href="#products" data-section="products">
                 🛒
                 <span>Products</span>
             </a>
 
-            <a href="#categories">
+            <a href="#categories" data-section="categories">
                 🏷️
                 <span>Categories</span>
             </a>
 
-            <a href="#suppliers">
+            <a href="#suppliers" data-section="suppliers">
                 🚚
                 <span>Suppliers</span>
             </a>
 
-            <a href="#reports">
+            <a href="#reports" data-section="reports">
                 📈
                 <span>Reports</span>
             </a>
@@ -1214,11 +1454,11 @@
 
         <div class="sidebar-bottom">
 
-            <a href="#dashboard">
+            <a href="#settings" data-section="settings">
                 ⚙️ Settings
             </a>
 
-            <a href="#dashboard">
+            <a href="#" id="logoutBtn">
                 🚪 Logout
             </a>
 
@@ -1239,7 +1479,7 @@
              DASHBOARD
         ================================== -->
 
-        <section id="dashboard">
+        <section id="dashboard" class="page-section active-section">
 
             <header class="header">
 
@@ -1286,14 +1526,22 @@
             <div class="top-tools">
 
                 <div class="search">
-
-                    🔍
-
-                    <input
-                        type="text"
-                        placeholder="Search products..."
-                    >
-
+                    <div class="search-controls">
+                        <span>🔍</span>
+                        <input
+                            id="globalSearch"
+                            type="text"
+                            placeholder="Search products..."
+                            autocomplete="off"
+                        >
+                        <select id="searchType" aria-label="Search by">
+                            <option value="all">All</option>
+                            <option value="name">Product Name</option>
+                            <option value="category">Category</option>
+                            <option value="sku">SKU</option>
+                            <option value="status">Stock Status</option>
+                        </select>
+                    </div>
                 </div>
 
                 <button class="add-btn">
@@ -1599,7 +1847,7 @@
              INVENTORY
         ================================== -->
 
-        <section id="inventory">
+        <section id="inventory" class="page-section">
 
             <div class="section-title">
 
@@ -1653,7 +1901,7 @@
                         </thead>
 
 
-                        <tbody>
+                        <tbody id="inventoryBody">
 
 
                             <tr>
@@ -1872,7 +2120,7 @@
              PRODUCTS
         ================================== -->
 
-        <section id="products">
+        <section id="products" class="page-section">
 
             <div class="section-title">
 
@@ -1887,7 +2135,7 @@
             </div>
 
 
-            <div class="product-grid">
+            <div class="product-grid" id="productGrid">
 
 
                 <div class="product-card">
@@ -2074,7 +2322,7 @@
              CATEGORIES
         ================================== -->
 
-        <section id="categories">
+        <section id="categories" class="page-section">
 
             <div class="section-title">
 
@@ -2187,7 +2435,7 @@
              SUPPLIERS
         ================================== -->
 
-        <section id="suppliers">
+        <section id="suppliers" class="page-section">
 
             <div class="section-title">
 
@@ -2326,7 +2574,7 @@
              REPORTS
         ================================== -->
 
-        <section id="reports">
+        <section id="reports" class="page-section">
 
             <div class="section-title">
 
@@ -2588,23 +2836,73 @@
 
 
 
-        <!-- FOOTER -->
 
-        <footer>
+        <!-- =================================
+             SETTINGS
+        ================================== -->
+        <section id="settings" class="page-section">
+            <div class="section-title">
+                <h1>Settings</h1>
+                <p>Customize the dashboard behavior and local preferences.</p>
+            </div>
 
-            <span>
-                © 2026 FMCG Inventory Management System
-            </span>
+            <div class="settings-grid">
+                <div class="setting-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2>Dashboard Preferences</h2>
+                            <p>These settings are saved in this browser.</p>
+                        </div>
+                    </div>
 
-            <span>
-                HTML + CSS Project
-            </span>
+                    <div class="setting-row">
+                        <div>
+                            <strong>Notifications</strong>
+                            <small>Show inventory notification messages.</small>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="notificationsSetting" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
 
-        </footer>
+                    <div class="setting-row">
+                        <div>
+                            <strong>Compact Mode</strong>
+                            <small>Use smaller cards and table spacing.</small>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="compactSetting">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
 
+                    <div class="settings-actions">
+                        <button class="action-btn primary" id="saveSettingsBtn" type="button">Save Settings</button>
+                        <button class="action-btn secondary" id="resetSettingsBtn" type="button">Reset Settings</button>
+                    </div>
+                    <p id="settingsMessage" style="margin-top:12px;color:#16a34a;font-size:12px;"></p>
+                </div>
 
-    </main>
-<div class="ai-box">
+                <div class="setting-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2>Inventory Data</h2>
+                            <p>Manage products added during this demo.</p>
+                        </div>
+                    </div>
+                    <p style="color:#6b7280;font-size:13px;line-height:1.7;">
+                        Products added with the <strong>+ Add Product</strong> button are stored locally in your browser so they remain after a page refresh.
+                    </p>
+                    <div class="settings-actions">
+                        <button class="action-btn danger" id="clearAddedProductsBtn" type="button">Clear Added Products</button>
+                    </div>
+                    <p id="dataMessage" style="margin-top:12px;color:#16a34a;font-size:12px;"></p>
+                </div>
+            </div>
+        </section>
+
+    <div class="ai-box">
 
     <h2>🤖 AI Inventory Assistant</h2>
 
@@ -2626,6 +2924,87 @@
     </div>
 
 </div>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <span>
+                © 2026 FMCG Inventory Management System
+            </span>
+
+            <span>
+                HTML + CSS Project
+            </span>
+
+        </footer>
+
+
+    </main>
+
+    <!-- ADD PRODUCT MODAL -->
+    <dialog id="productDialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Product</h2>
+                <button class="close-btn" id="closeProductDialog" type="button" aria-label="Close">×</button>
+            </div>
+
+            <form id="productForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="productName">Product Name</label>
+                        <input id="productName" name="productName" required placeholder="e.g. Cooking Oil">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productCategory">Category</label>
+                        <select id="productCategory" name="productCategory" required>
+                            <option value="">Select category</option>
+                            <option>Dairy</option>
+                            <option>Beverages</option>
+                            <option>Snacks</option>
+                            <option>Grocery</option>
+                            <option>Household</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productSku">SKU</label>
+                        <input id="productSku" name="productSku" required placeholder="e.g. FMC-006">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productQty">Quantity</label>
+                        <input id="productQty" name="productQty" type="number" min="0" required placeholder="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productPrice">Price (Rs.)</label>
+                        <input id="productPrice" name="productPrice" type="number" min="0" step="0.01" required placeholder="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productIcon">Icon</label>
+                        <input id="productIcon" name="productIcon" maxlength="2" value="📦" placeholder="📦">
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="productDescription">Description</label>
+                        <input id="productDescription" name="productDescription" placeholder="e.g. 1 Liter Pack">
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="action-btn secondary" id="cancelProductBtn" type="button">Cancel</button>
+                    <button class="action-btn primary" type="submit">Add Product</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+
 
 <script>
 
@@ -2681,6 +3060,336 @@ async function askAI() {
     }
 }
 
+
+/* ================================
+   FMCG DASHBOARD FUNCTIONALITY
+================================ */
+
+const defaultProductCount = 248;
+const defaultStockTotal = 8540;
+const addedProductsKey = "fmcg_added_products_v1";
+const settingsKey = "fmcg_dashboard_settings_v1";
+
+const productDialog = document.getElementById("productDialog");
+const productForm = document.getElementById("productForm");
+const inventoryBody = document.getElementById("inventoryBody");
+const productGrid = document.getElementById("productGrid");
+const globalSearch = document.getElementById("globalSearch");
+const searchType = document.getElementById("searchType");
+
+function getAddedProducts() {
+    try {
+        return JSON.parse(localStorage.getItem(addedProductsKey) || "[]");
+    } catch {
+        return [];
+    }
+}
+
+function saveAddedProducts(products) {
+    localStorage.setItem(addedProductsKey, JSON.stringify(products));
+}
+
+function getStatus(qty) {
+    const n = Number(qty);
+    if (n <= 0) return "Out of Stock";
+    if (n <= 100) return "Low Stock";
+    return "In Stock";
+}
+
+function statusClass(status) {
+    if (status === "Out of Stock") return "out";
+    if (status === "Low Stock") return "low";
+    return "available";
+}
+
+function categoryIcon(category) {
+    const icons = {
+        Dairy: "🥛",
+        Beverages: "🥤",
+        Snacks: "🍪",
+        Grocery: "🍚",
+        Household: "🧼"
+    };
+    return icons[category] || "📦";
+}
+
+function appendInventoryRow(product) {
+    const status = getStatus(product.qty);
+    const row = document.createElement("tr");
+    row.dataset.addedProduct = "true";
+    row.innerHTML = `
+        <td>
+            <div class="product">
+                <div class="product-icon">${product.icon || categoryIcon(product.category)}</div>
+                <div>
+                    <strong>${escapeHtml(product.name)}</strong>
+                    <small>${escapeHtml(product.description || "FMCG Product")}</small>
+                </div>
+            </div>
+        </td>
+        <td>${escapeHtml(product.category)}</td>
+        <td>${escapeHtml(product.sku)}</td>
+        <td>${Number(product.qty).toLocaleString()}</td>
+        <td>Rs. ${Number(product.price).toLocaleString()}</td>
+        <td><span class="status ${statusClass(status)}">● ${status}</span></td>
+    `;
+    inventoryBody.appendChild(row);
+}
+
+function appendProductCard(product) {
+    const card = document.createElement("div");
+    card.className = "product-card";
+    card.dataset.addedProduct = "true";
+    card.innerHTML = `
+        <div class="big-product-icon">${product.icon || categoryIcon(product.category)}</div>
+        <h3>${escapeHtml(product.name)}</h3>
+        <p>${escapeHtml(product.category)}</p>
+        <div class="product-info">
+            <span>Stock: ${Number(product.qty).toLocaleString()}</span>
+            <strong>Rs. ${Number(product.price).toLocaleString()}</strong>
+        </div>
+    `;
+    productGrid.appendChild(card);
+}
+
+function escapeHtml(value) {
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function restoreAddedProducts() {
+    getAddedProducts().forEach(product => {
+        appendInventoryRow(product);
+        appendProductCard(product);
+    });
+}
+
+function openProductDialog() {
+    productDialog.showModal();
+    setTimeout(() => document.getElementById("productName").focus(), 50);
+}
+
+function closeProductDialog() {
+    productDialog.close();
+    productForm.reset();
+    document.getElementById("productIcon").value = "📦";
+}
+
+document.querySelector(".add-btn").addEventListener("click", openProductDialog);
+document.getElementById("closeProductDialog").addEventListener("click", closeProductDialog);
+document.getElementById("cancelProductBtn").addEventListener("click", closeProductDialog);
+
+productDialog.addEventListener("click", event => {
+    if (event.target === productDialog) closeProductDialog();
+});
+
+productForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const product = {
+        name: document.getElementById("productName").value.trim(),
+        category: document.getElementById("productCategory").value,
+        sku: document.getElementById("productSku").value.trim().toUpperCase(),
+        qty: Number(document.getElementById("productQty").value),
+        price: Number(document.getElementById("productPrice").value),
+        icon: document.getElementById("productIcon").value.trim() || "📦",
+        description: document.getElementById("productDescription").value.trim()
+    };
+
+    const products = getAddedProducts();
+
+    if (products.some(p => p.sku.toLowerCase() === product.sku.toLowerCase())) {
+        alert("This SKU already exists in the added products.");
+        return;
+    }
+
+    products.push(product);
+    saveAddedProducts(products);
+
+    appendInventoryRow(product);
+    appendProductCard(product);
+    updateStats();
+    closeProductDialog();
+
+    navigateTo("inventory");
+    if (getSetting("notifications", true)) {
+        alert(`${product.name} was added successfully.`);
+    }
+});
+
+function getAllVisibleRows() {
+    return Array.from(inventoryBody.querySelectorAll("tr"));
+}
+
+function filterInventory() {
+    const term = globalSearch.value.trim().toLowerCase();
+    const type = searchType.value;
+
+    if (!term) {
+        getAllVisibleRows().forEach(row => row.style.display = "");
+        return;
+    }
+
+    getAllVisibleRows().forEach(row => {
+        const cells = row.cells;
+        const name = cells[0]?.innerText.toLowerCase() || "";
+        const category = cells[1]?.innerText.toLowerCase() || "";
+        const sku = cells[2]?.innerText.toLowerCase() || "";
+        const status = cells[5]?.innerText.toLowerCase() || "";
+
+        const haystack = {
+            all: `${name} ${category} ${sku} ${status}`,
+            name,
+            category,
+            sku,
+            status
+        }[type];
+
+        row.style.display = haystack.includes(term) ? "" : "none";
+    });
+}
+
+globalSearch.addEventListener("input", () => {
+    filterInventory();
+});
+searchType.addEventListener("change", filterInventory);
+
+function navigateTo(sectionId, updateHash = true) {
+    const sections = document.querySelectorAll(".page-section");
+    sections.forEach(section => {
+        section.classList.toggle("active-section", section.id === sectionId);
+    });
+
+    document.querySelectorAll("[data-section]").forEach(link => {
+        link.classList.toggle("active-nav", link.dataset.section === sectionId);
+    });
+
+    const aiBox = document.querySelector(".ai-box");
+    if (aiBox) aiBox.style.display = sectionId === "dashboard" ? "block" : "none";
+
+    if (updateHash && location.hash !== `#${sectionId}`) {
+        history.pushState(null, "", `#${sectionId}`);
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.querySelectorAll("[data-section]").forEach(link => {
+    link.addEventListener("click", event => {
+        event.preventDefault();
+        navigateTo(link.dataset.section);
+    });
+});
+
+window.addEventListener("popstate", () => {
+    const id = location.hash.replace("#", "") || "dashboard";
+    navigateTo(document.getElementById(id) ? id : "dashboard", false);
+});
+window.addEventListener("hashchange", () => {
+    const id = location.hash.replace("#", "") || "dashboard";
+    navigateTo(document.getElementById(id) ? id : "dashboard", false);
+});
+
+document.getElementById("logoutBtn").addEventListener("click", event => {
+    event.preventDefault();
+    alert("Logout is not connected because this dashboard has no login/authentication system yet.");
+    navigateTo("dashboard");
+});
+
+function updateStats() {
+    const added = getAddedProducts();
+    const totalQty = added.reduce((sum, p) => sum + Number(p.qty || 0), 0);
+    const low = added.filter(p => getStatus(p.qty) === "Low Stock").length;
+    const out = added.filter(p => getStatus(p.qty) === "Out of Stock").length;
+
+    const statCards = document.querySelectorAll(".stat-card h2");
+    if (statCards.length >= 4) {
+        statCards[0].textContent = (defaultProductCount + added.length).toLocaleString();
+        statCards[1].textContent = (defaultStockTotal + totalQty).toLocaleString();
+        statCards[2].textContent = 18 + low;
+        statCards[3].textContent = 7 + out;
+    }
+}
+
+function loadSettings() {
+    let settings;
+    try {
+        settings = JSON.parse(localStorage.getItem(settingsKey) || "{}");
+    } catch {
+        settings = {};
+    }
+
+    const notifications = settings.notifications !== false;
+    const compact = settings.compact === true;
+
+    document.getElementById("notificationsSetting").checked = notifications;
+    document.getElementById("compactSetting").checked = compact;
+    document.body.classList.toggle("compact-mode", compact);
+}
+
+function getSetting(name, fallback) {
+    try {
+        const settings = JSON.parse(localStorage.getItem(settingsKey) || "{}");
+        return settings[name] !== undefined ? settings[name] : fallback;
+    } catch {
+        return fallback;
+    }
+}
+
+document.getElementById("saveSettingsBtn").addEventListener("click", () => {
+    const settings = {
+        notifications: document.getElementById("notificationsSetting").checked,
+        compact: document.getElementById("compactSetting").checked
+    };
+    localStorage.setItem(settingsKey, JSON.stringify(settings));
+    document.body.classList.toggle("compact-mode", settings.compact);
+
+    const msg = document.getElementById("settingsMessage");
+    msg.textContent = "Settings saved successfully.";
+    setTimeout(() => msg.textContent = "", 2500);
+});
+
+document.getElementById("resetSettingsBtn").addEventListener("click", () => {
+    localStorage.removeItem(settingsKey);
+    loadSettings();
+
+    const msg = document.getElementById("settingsMessage");
+    msg.textContent = "Settings reset.";
+    setTimeout(() => msg.textContent = "", 2500);
+});
+
+document.getElementById("clearAddedProductsBtn").addEventListener("click", () => {
+    if (!getAddedProducts().length) {
+        document.getElementById("dataMessage").textContent = "There are no added products to clear.";
+        return;
+    }
+
+    if (!confirm("Remove all products added through this browser?")) return;
+
+    localStorage.removeItem(addedProductsKey);
+    document.querySelectorAll('[data-added-product="true"]').forEach(el => el.remove());
+    updateStats();
+
+    const msg = document.getElementById("dataMessage");
+    msg.textContent = "Added products cleared.";
+    setTimeout(() => msg.textContent = "", 2500);
+});
+
+/* Initial state */
+restoreAddedProducts();
+loadSettings();
+
+const initialSection = location.hash.replace("#", "");
+navigateTo(
+    document.getElementById(initialSection) ? initialSection : "dashboard",
+    false
+);
+
 </script>
 </body>
+
 </html>
